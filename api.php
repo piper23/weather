@@ -5,16 +5,24 @@
 
 class API{
 
+private $apiKey="145645e544e640a0adb7aafa03d4e61d";
+public $apiURL =  "https://api.weatherbit.io/v2.0/forecast/daily?";
 
-public $apiURL =  "https://api.darksky.net/forecast/9e1cd7150620a49c044da25ce40a4d56/";
-
-public $date,$at,$long = "";
+public $date,$at,$long,$cityName = "";
 
 
 
 function getForeCast(){
+$str="city=".$this->city;
+if(isset($this->lat) && isset($this->long)){
+	$str="lat=".$this->lat."&lon=".$this->long;
+}
+
+
+  $callingURL = $this->apiURL.$str."&key=".$this->apiKey;
+
 	$ch = curl_init();
-curl_setopt($ch,CURLOPT_URL,$this->apiURL.$this->lat.",".$this->long."?exclude=hourly");
+curl_setopt($ch,CURLOPT_URL,$callingURL);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 
@@ -28,13 +36,17 @@ return json_decode( $output,true);
 
 }
 
-$m = new API();
 
-$m->date = date("Y-m-d\Th:i:s");
-$m->lat = "18.377986";
-$m->long = "75.987924";
-echo("<pre>");
 
-print_r($m->getForeCast());
+print_r(json_encode($_POST));
+
+//$m = new API();
+
+// $m->lat = "18.377986";
+// $m->long = "75.987924";
+// $m->city = "Mumbai";
+// echo("<pre>");
+
+// print_r($m->getForeCast());
 //curl_setopt($ch,CURLOPT_HEADER, true); //if you want headers
 ?>
