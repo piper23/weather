@@ -167,11 +167,11 @@ input#searchQuery:focus{
 		max-width: 100%;
 	}
 
-		.container-flex {
+	.container-flex {
 		display: block;
 	}
 	.search-field {
-	margin: 5% auto;
+		margin: 5% auto;
 	}
 
 	.forecast {
@@ -203,8 +203,8 @@ input#searchQuery:focus{
 		font-size: 5em;
 	}
 	input#searchQuery {
-    width: 60%;
-    }
+		width: 60%;
+	}
 }
 
 @media only screen and (max-width: 400px){
@@ -215,26 +215,37 @@ input#searchQuery:focus{
 		padding: 5px;
 	}
 	#get-loc img {
-    width: 25px;
-  
-}#locatbind {
-	margin: 0
-}
+		width: 25px;
 
-input#searchQuery {
-    width: 60%;
-    }
+	}
+	#locatbind {
+		margin: 0
+	}
+
+	input#searchQuery {
+		width: 60%;
+	}
 	.otherData h3{
-	font-size: 0.9em;
-    margin: 0;
-    margin-bottom: 22px;
-}
-.mg-left {
-    margin-left: 5px;
-}
-.middle-section div {
- width: -webkit-fill-available;
-}
+		font-size: 0.9em;
+		margin: 0;
+		margin-bottom: 22px;
+	}
+	.mg-left {
+		margin-left: 5px;
+	}
+	.middle-section div {
+		width: -webkit-fill-available;
+	}
 
 }
-
+#farcheck{
+	display: none;
+}
+ #farcheck +  label  {
+	background: #c54040;
+	padding:10px;
+	margin-left: 5px;
+}
+#farcheck:checked + label  {
+	background: #62c540;
+}
