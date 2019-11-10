@@ -51,6 +51,20 @@
 				</div>
 			</div>	
 		</section>
+		<section class="forecast">
+			<div class="forecast-card">
+				<h4>Monday</h4>
+				<p class="temp">
+					24C	
+				</p>
+			</div>
+			<div class="forecast-card"></div>
+			<div class="forecast-card"></div>
+			<div class="forecast-card"></div>
+			<div class="forecast-card"></div>
+			<div class="forecast-card"></div>
+			<div class="forecast-card"></div>
+		</section>
 	</article>
 <script type="text/javascript">
 var cityDefault = "Mumbai";
@@ -60,27 +74,33 @@ document.getElementById('searchQuery').addEventListener('keyup', (e)=>{
 	city = document.getElementById('searchQuery').value
 });
 
+//Print Temp checks for Farenheight Toggle
 var printTemp = (temp)=>{
 	console.log(temp)
 return (c==true)?temp+"&#176;C":fConvert(temp)+"&#176;F"
 }
-
-
-
 function fConvert(temps){
-
 		return (parseFloat(temps) * 1.8 + 32).toFixed(2)
 }
-	
+//Farenheight Toggle
+var farcheck = document.getElementById("farcheck");
+farcheck.addEventListener("change", function(){ 
+	if(this.checked) {
+        c=false;
+    } else {
+       c=true;
+    }
+    renderTemp()
+});
 
+
+
+	
+//Code to get Day Of Week
 var getDayofWeek = (date) =>{
 var weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-
 var dt = new Date(date);
-
 return weekdays[dt.getDay()];
-
 }
 
 
@@ -92,12 +112,18 @@ if(city.length==""){
 	return false;	
 }
 
- fetchData(city)
+ fetchData(city);
 });
 
-function fetchData(payload){
+
+
+//Ajax Function
+var fetchData = (payload,def=1) =>{
+var	passkey="city";
+	if(def==2)
+		passkey="coordinates";
 	var data = new FormData();
-data.append( "json", JSON.stringify( payload) );
+data.append(passkey, JSON.stringify( payload) );
 
 fetch("api.php",
 {
@@ -109,17 +135,9 @@ fetch("api.php",
 }
 
 
-var farcheck = document.getElementById("farcheck");
 
-farcheck.addEventListener("change", function(){ 
-	if(this.checked) {
-        c=false;
-    } else {
-       c=true;
-    }
-    renderTemp()
-});
 
+//Render Codes
 
 var city="";
 var c = true;
@@ -148,6 +166,9 @@ document.getElementById("locatbind").innerHTML  =  state.city
 renderTemp();
 }
 
+
+
+ fetchData(state.city);
 
 renderData();
 </script>
