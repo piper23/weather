@@ -15,7 +15,7 @@ class API{
 	function getForeCast(){
 		$str="";
 		if(isset($this->city))
-			$str="city=".$this->city;
+			$str="city=".urlencode($this->city);
 		if(isset($this->lat) && isset($this->long)){
 			$str="lat=".$this->lat."&lon=".$this->long;
 		}

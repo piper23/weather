@@ -26,7 +26,7 @@
 				</div>
 				<div class="inputs-types">
 					<label for="farcheck">
-						<input type="checkbox" name="Far" id="farcheck" value="F">	Fahrenheit
+						<input type="checkbox" name="Far" id="farcheck" value="F">	&#176;F
 					</label>
 
 				</div>
@@ -73,6 +73,9 @@
 		};
 
 		document.getElementById('searchQuery').addEventListener('keyup', (e)=>{
+			 if (e.keyCode === 13) {
+        			fetchData(city);
+   			 }
 			city = document.getElementById('searchQuery').value
 		});
 
@@ -80,13 +83,13 @@
 var printTemp = (temp)=>{
 	return (c==true)?temp+"&#176;C":fConvert(temp)+"&#176;F"
 }
-//Function to convert Temp to F
+//Function to convert Temp
 var fConvert=(temps)=>{
 	return (parseFloat(temps) * 1.8 + 32).toFixed(2)
 }
 //Farenheight Toggle
 var farcheck = document.getElementById("farcheck");
-farcheck.addEventListener("change", ()=>{ 
+farcheck.addEventListener("change", function(){ 
 	if(this.checked) {
 		c=false;
 	} else {
@@ -106,13 +109,9 @@ var getDayofWeek = (date) =>{
 }
 
 
-///Search
-
+///Search button handler
 document.getElementById("search").addEventListener("click", ()=>{
-	if(city==""){
-		alert('City Field cannot be blank')
-		return false;	
-	}
+
 	city=document.getElementById("searchQuery").value;
 
 	fetchData(city);
@@ -122,7 +121,10 @@ document.getElementById("search").addEventListener("click", ()=>{
 
 //Ajax Function
 var fetchData = (payload,def=1) =>{
-	
+	if(city==""){
+		alert('City Field cannot be blank')
+		return false;	
+	}
 	var	passkey="city";
 	if(def==2)
 		passkey="coordinates";
@@ -133,8 +135,8 @@ var fetchData = (payload,def=1) =>{
 		method: "POST",
 		body: data
 	})
-	.then((res)=>{ return res.json(); })
-	.then((data)=>{ 
+	.then(function(res){ return res.json(); })
+	.then(function(data){ 
 		if(data == null){
 			alert("Weather not Found")
 			return false;
@@ -158,7 +160,7 @@ if ("geolocation" in navigator) {
 	var geoL = document.getElementById("get-loc")
 	geoL.style.display = "block";
 	geoL.addEventListener("click", ()=>{
-		navigator.geolocation.getCurrentPosition((position)=> {
+		navigator.geolocation.getCurrentPosition(function(position) {
 			let	coordinates = {'lat':position.coords.latitude,'long':position.coords.longitude}
 			fetchData(coordinates,2)
 
@@ -169,17 +171,14 @@ if ("geolocation" in navigator) {
 }
 
 
-//Render Codes
-
-
-
-//render Temps
+//Render Codes..........
+//render Temps///////
 //render Forecast block
 var renderForecast = ()=>{
 	var divAppend = document.getElementById("forecast")
 	divAppend.innerHTML = "";
 	let futrueData = state.forecast;
-	futrueData.forEach((element) => {
+	futrueData.forEach(function(element) {
 		const div = document.createElement('div');
 		div.className = "forecast-card";
 		div.innerHTML = `<h4>${getDayofWeek(element.valid_date)}</h4><p class="temp">${printTemp(element.temp)}</p></div>`;
